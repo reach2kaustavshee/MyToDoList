@@ -11,7 +11,6 @@ export default MyStack = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Landing" component={BottomTabNavigator} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -13,13 +13,14 @@ import ColorsConstants from '../constants/ColorsConstants';
 import CustomEditText from '../component/CustomEditText';
 import CustomSubmitButton from '../component/CustomSubmitButton';
 import ImageConstants from '../constants/ImageConstants';
+import { LoginContext } from '../context/LoginContext';
 
 export default class LoginScreen extends Component {
   constructor() {
     super();
     this.state = {
-      userName: '',
-      password: '',
+      userName: 'Admin',
+      password: 'PASSWORD',
       passSecurity: true,
       errorUserName:'',
       errorPassword:''
@@ -43,27 +44,30 @@ export default class LoginScreen extends Component {
     let flag = true;
     if (this.state.userName.length == 0) {
       this.setState({errorUserName:'Please enter the user name'});
-      false = false;
+      flag = false;
     }
     if (this.state.password.length == 0) {
       this.setState({errorPassword:'Please enter the password'});
-      false = false;
+      flag = false;
+    }
+    if (flag === false) {
+      return flag;
     }
     if (this.state.userName != 'Admin' || this.state.password != 'PASSWORD') {
       this.setState({errorPassword:'User name and password mismatched, please try again!!!',errorUserName:''});
-      false = false;
+      flag = false;
     }
     return flag;
   }
 
   signinPressed() {
     if (this.validation()) {
-      console.log('login success');
+      const {login} = this.context;
+      login();
     }
   }
 
   render() {
-    console.log(this.state.passSecurity);
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === 'android' ? 'height' : 'padding'}
@@ -114,6 +118,8 @@ export default class LoginScreen extends Component {
     );
   }
 }
+
+LoginScreen.contextType = LoginContext;
 
 const styles = StyleSheet.create({
   main: {

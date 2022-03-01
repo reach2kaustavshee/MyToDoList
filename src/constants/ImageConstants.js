@@ -9,6 +9,8 @@ const ImageConstants = {
     plus:  require('../../assets/plus.png'),
     user:  require('../../assets/user.png'),
     loginface:  require('../../assets/loginface.png'),
-    registration_logo:  require('../../assets/registration_logo.png')
+    registration_logo:  require('../../assets/registration_logo.png'),
+    add:  require('../../assets/add.png'),
+    logout:  require('../../assets/logout.png')
 };
 module.exports = ImageConstants ;

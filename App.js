@@ -8,15 +8,33 @@
 
 import 'react-native-gesture-handler';
 
+import LoginContextProvider, {useLogin} from './src/context/LoginContext';
+import {StatusBar, StyleSheet} from 'react-native';
+
+import BottomTabNavigator from './src/Navigator/BottomTabNavigator';
 import React from 'react';
 import StackNavigator from './src/Navigator/StackNavigator';
-import {
-  StyleSheet,
-} from 'react-native';
+
+const _LoginDecider = () => {
+  const {isLoggedIn} = useLogin();
+  if (isLoggedIn) {
+    return <StackNavigator />;
+  } else {
+    return <BottomTabNavigator />;
+  }
+};
 
 const App = () => {
   return (
-    <StackNavigator />
+    <LoginContextProvider>
+      <StatusBar
+        barStyle="light-content"
+        hidden={false}
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <_LoginDecider />
+    </LoginContextProvider>
   );
 };
 
