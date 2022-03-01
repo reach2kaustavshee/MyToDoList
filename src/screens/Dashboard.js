@@ -137,6 +137,7 @@ class Dashboard extends Component {
                 style={styles.textField}
                 value={this.state.text}
                 placeholder="Enter your to do details"
+                placeholderTextColor={ColorsConstants.placeholderColor}
                 onChangeText={str => this.setState({text: str})}
               />
               <View style={styles.buttonContainer}>
