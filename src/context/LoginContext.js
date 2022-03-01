@@ -1,29 +1,40 @@
-import { createContext, useContext, useState } from "react";
+import {createContext, useContext, useState} from 'react';
 
-import React from "react";
+import {AsyncStorage} from 'react-native';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
 
 export const LoginContext = createContext();
 
 function LoginContextProvider(props) {
+  const [isLoggedIn, setIsLoggedIn] = useState("logout");
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isProfileSetupDone, setIsProfileSetUpDone] = useState(false);
+  function fetchLogin() {
+    AsyncStorage.getItem("isLoggedIn", (error, result) => {
+        if (result) {
+        //   console.log(result);
+          setIsLoggedIn(result);
+        }
+      });
+  }
 
-    function login() {
-        setIsLoggedIn(true);
-        console.log("context login");
-    }
+  function login() {
+    setIsLoggedIn("login",isLoggedIn);
+    AsyncStorage.setItem("isLoggedIn", "login");
+    console.log('context login');
+  }
 
-    function logout() {
-        setIsLoggedIn(false);
-        console.log("context logout");
-    }
+  function logout() {
+    setIsLoggedIn("logout");
+    AsyncStorage.setItem("isLoggedIn", "logout");
+    console.log('context logout');
+  }
 
-    return (
-        <LoginContext.Provider value={{isLoggedIn, login, logout}}>
-            {props.children}
-        </LoginContext.Provider>
-    )
+  return (
+    <LoginContext.Provider value={{isLoggedIn, login, logout, fetchLogin}}>
+      {props.children}
+    </LoginContext.Provider>
+  );
 }
 
 export const useLogin = () => useContext(LoginContext);

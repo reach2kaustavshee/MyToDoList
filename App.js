@@ -9,16 +9,26 @@
 import 'react-native-gesture-handler';
 
 import LoginContextProvider, {useLogin} from './src/context/LoginContext';
+import React, {useEffect} from 'react';
 import {StatusBar, StyleSheet} from 'react-native';
 
 import BottomTabNavigator from './src/Navigator/BottomTabNavigator';
-import React from 'react';
 import StackNavigator from './src/Navigator/StackNavigator';
+import TodoContextProvider from './src/context/ToDoContext';
 
 const _LoginDecider = () => {
-  const {isLoggedIn} = useLogin();
-  if (isLoggedIn) {
-    return <StackNavigator />;
+  const {isLoggedIn, fetchLogin} = useLogin();
+
+  useEffect(() => {
+    fetchLogin();
+  });
+
+  if (isLoggedIn == 'login') {
+    return (
+      <TodoContextProvider>
+        <StackNavigator />
+      </TodoContextProvider>
+    );
   } else {
     return <BottomTabNavigator />;
   }
